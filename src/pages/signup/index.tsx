@@ -1,7 +1,7 @@
 import React from 'react';
 import SignUpForm from "@/components/common/signup-form/SignUpForm";
 
-const Index = () => {
+const SignUp = () => {
     return (
         <div>
             <SignUpForm />
@@ -9,4 +9,4 @@ const Index = () => {
     );
 };
 
-export default Index;
+export default SignUp;
