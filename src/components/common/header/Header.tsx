@@ -16,9 +16,11 @@ const Header = () => {
                 <Typography variant="h6" component="div" sx={styles.title}>
                     Ribas
                 </Typography>
+                <Link href={"/reg-hotel"}>
                 <Button color="inherit" sx={styles.button}>
                     Зареєструвати готель
                 </Button>
+                </Link>
                 <Link href="/signup" passHref>
                     <Button color="inherit" sx={styles.whiteButton}>
                         Зареєструватися

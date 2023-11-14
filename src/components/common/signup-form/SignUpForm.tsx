@@ -152,12 +152,13 @@ const SignUpForm: React.FC = () => {
 
     return (
         <Container sx={styles.container}>
-            <Typography sx={styles.h4} variant="h4">Sign up</Typography>
+            <Typography sx={styles.h4} variant="h4">Реєстрація користувача</Typography>
             <form onSubmit={handleSubmit}>
                 <TextField
                     sx={styles.input}
                     type={"email"}
-                    label="Email"
+                    label="Електронна пошта"
+                    placeholder={"google.gmail.com"}
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
@@ -168,7 +169,7 @@ const SignUpForm: React.FC = () => {
                 <TextField
                     sx={styles.input}
                     type={"password"}
-                    label="Password"
+                    label="Пароль"
                     name="password"
                     value={formData.password}
                     onChange={handleInputChange}
@@ -178,7 +179,7 @@ const SignUpForm: React.FC = () => {
                 />
                 <TextField
                     sx={styles.input}
-                    label="Surname"
+                    label="Прізвище"
                     name="surname"
                     value={formData.surname}
                     onChange={handleInputChange}
@@ -189,7 +190,7 @@ const SignUpForm: React.FC = () => {
 
                 <TextField
                     sx={styles.input}
-                    label="Name"
+                    label="Ім'я"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
@@ -200,7 +201,7 @@ const SignUpForm: React.FC = () => {
 
                 <TextField
                     sx={styles.input}
-                    label="Patronymic"
+                    label="По батькові"
                     name="patronymic"
                     value={formData.patronymic}
                     onChange={handleInputChange}
@@ -212,7 +213,7 @@ const SignUpForm: React.FC = () => {
                 <TextField
                     sx={styles.inputDate}
                     type={"date"}
-                    label="Birthdate"
+                    label="Дата народження"
                     name="birthdate"
                     value={formatDate(formData.birthdate)}
                     onChange={handleInputChange}
@@ -223,44 +224,29 @@ const SignUpForm: React.FC = () => {
                 <TextField
                     sx={styles.input}
                     type="text"
-                    label="Phone number"
+                    label="Номер телефону"
                     name="phone"
                     value={formData.phone}
                     onChange={handlePhoneChange}
                     required
                 />
                 <div>
-                    <label>Gender:</label>
+                    <label>Стать:</label>
                     <Radio
                         name="gender"
                         value="male"
                         checked={formData.gender === 'male'}
                         onChange={handleGenderChange}
                     />
-                    Male
+                    Чоловік
                     <Radio
                         name="gender"
                         value="female"
                         checked={formData.gender === 'female'}
                         onChange={handleGenderChange}
                     />
-                    Female
+                    Жінка
                 </div>
-                <FormControl sx={styles.input}>
-                    <InputLabel htmlFor="group">Group</InputLabel>
-                    <Select
-                        label="Group"
-                        name="group"
-                        value={formData.group}
-                        onChange={handleGroupChange}
-                        required
-                    >
-                        <MenuItem value="IA-21">IA-21</MenuItem>
-                        <MenuItem value="IA-22">IA-22</MenuItem>
-                        <MenuItem value="IA-23">IA-23</MenuItem>
-                        <MenuItem value="IA-24">IA-24</MenuItem>
-                    </Select>
-                </FormControl>
                 <Button
                     sx={styles.buttonSend}
                     type="submit"
@@ -276,54 +262,7 @@ const SignUpForm: React.FC = () => {
                 >
                     Send
                 </Button>
-
             </form>
-            <TableContainer sx={styles.tableContainer}>
-                <Table sx={styles.table}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Select</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Last Name</TableCell>
-                            <TableCell>First Name</TableCell>
-                            <TableCell>Patronymic</TableCell>
-                            <TableCell>Birthdate</TableCell>
-                            <TableCell>Gender</TableCell>
-                            <TableCell>Phone</TableCell>
-                            <TableCell>Group</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {tableData.map((data, index) => (
-                            <TableRow key={index}>
-                                <TableCell>
-                                    <Checkbox
-                                        checked={data.selected}
-                                        onChange={() => {
-                                            data.selected = !data.selected;
-                                            setTableData([...tableData]);
-                                        }}
-                                    />
-                                </TableCell>
-                                <TableCell>{data.email}</TableCell>
-                                <TableCell>{data.surname}</TableCell>
-                                <TableCell>{data.name}</TableCell>
-                                <TableCell>{data.patronymic}</TableCell>
-                                <TableCell>{data.birthdate}</TableCell>
-                                <TableCell>{data.gender}</TableCell>
-                                <TableCell>{data.phone}</TableCell>
-                                <TableCell>{data.group}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <Button sx={styles.button} variant="contained" color="secondary" onClick={handleDeleteSelected}>
-                Delete Selected
-            </Button>
-            <Button sx={styles.button} variant="contained" color="primary" onClick={handleDuplicateSelected}>
-                Duplicate Selected
-            </Button>
         </Container>
     );
 };

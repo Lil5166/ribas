@@ -1,16 +1,16 @@
 import React from 'react';
-import SignUpForm from "@/components/common/signup-form/SignUpForm";
 import Head from "next/head";
+import RegHotel from "@/components/pages/reg-hotel/RegHotel";
 import Header from "@/components/common/header/Header";
 
 const SignUp = () => {
     return (
         <div>
             <Head>
-                <title>Сторінка реєстрації</title>
+                <title>Сторінка реєстрації готеля</title>
             </Head>
             <Header />
-            <SignUpForm />
+            <RegHotel />
         </div>
     );
 };
