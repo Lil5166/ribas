@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { TextField, Button, Container, Typography, InputAdornment } from '@mui/material';
+import React, {useState} from 'react';
+import {Button, Container, InputAdornment, TextField, Typography} from '@mui/material';
 import * as styles from './RegHotel.styles'
 import IconButton from "@mui/material/IconButton";
 import Visibility from '@mui/icons-material/Visibility';
@@ -51,7 +51,7 @@ const RegHotel: React.FC = () => {
                                         onClick={() => setShowPassword(!showPassword)}
                                         edge="end"
                                     >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        {showPassword ? <VisibilityOff/> : <Visibility/>}
                                     </IconButton>
                                 </InputAdornment>
                             ),
