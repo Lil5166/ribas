@@ -1,16 +1,15 @@
 import React from 'react';
 import MainPage from "@/components/pages/main-page/MainPage";
-import Head from "next/head";
 import GlobalStyle from "@/styles/GlobalStyle";
+import Layout from "@/components/common/layout/Layout";
 
 const Main = () => {
     return (
         <div>
-            <Head>
-                <title>Головна сторінка</title>
-            </Head>
+            <Layout title={"Головна сторінка"}>
             <MainPage />
             <GlobalStyle/>
+            </Layout>
         </div>
     );
 };

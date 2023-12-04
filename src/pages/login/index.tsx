@@ -1,15 +1,11 @@
 import React from 'react';
-import Head from "next/head";
-import Header from "@/components/common/header/Header";
 import GlobalStyle from "@/styles/GlobalStyle";
+import Layout from "@/components/common/layout/Layout";
 
 const SignUp = () => {
     return (
         <div>
-            <Head>
-                <title>Сторінка авторизації</title>
-            </Head>
-            <Header/>
+            <Layout title={"Сторінка входу в обліковий запис"}/>
             <GlobalStyle/>
         </div>
     );

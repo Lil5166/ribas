@@ -1,20 +1,17 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import Checkbox from '@mui/material/Checkbox';
-import {InputLabel, Radio, SelectChangeEvent} from "@mui/material";
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import { InputAdornment } from "@mui/material";
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
+import PersonIcon from '@mui/icons-material/Person';
+import PhoneIcon from '@mui/icons-material/Phone';
 import * as styles from './SignUpForm.styles';
+import AuthApi from "@/lib/api/auth/AuthApi";
+import {RegisterFormDto} from "@/lib/api/auth/dto/auth";
+
 
 
 interface FormData {
@@ -22,15 +19,8 @@ interface FormData {
     password: string;
     surname: string;
     name: string;
-    patronymic: string;
-    gender: string;
-    birthdate: string;
-    phone: string;
-    group: string;
-}
-
-interface TableData extends FormData {
-    selected: boolean;
+    patronymic?: string;
+    phoneNumber: string;
 }
 
 const SignUpForm: React.FC = () => {
@@ -40,14 +30,10 @@ const SignUpForm: React.FC = () => {
         surname: '',
         name: '',
         patronymic: '',
-        gender: '',
-        birthdate: '',
-        phone: '',
-        group: '',
+        phoneNumber: '',
     };
 
     const [formData, setFormData] = useState<FormData>(initialFormData);
-    const [tableData, setTableData] = useState<TableData[]>([]);
     const [emailError, setEmailError] = useState<string | null>(null);
     const [passwordError, setPasswordError] = useState<string | null>(null);
     const [surnameError, setSurnameError] = useState<string | null>(null);
@@ -55,16 +41,7 @@ const SignUpForm: React.FC = () => {
     const [patronymicError, setPatronymicError] = useState<string | null>(null);
 
 
-    const maxDate = new Date();
-    maxDate.setDate(maxDate.getDate() - 1);
 
-
-    const handleGenderChange = (event: SelectChangeEvent<string>) => {
-        setFormData({
-            ...formData,
-            gender: event.target.value,
-        });
-    };
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         const patternEmail = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/;
@@ -91,40 +68,10 @@ const SignUpForm: React.FC = () => {
             default:
                 break;
         }
-        if (name === 'birthdate') {
-            const selectedDate = new Date(value);
-            if (selectedDate > maxDate) {
-                return;
-            }
-        }
-        setFormData({
-            ...formData,
+        setFormData((prevData) => ({
+            ...prevData,
             [name]: value,
-        });
-
-    };
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setTableData([...tableData, {...formData, selected: false}]);
-        setFormData(initialFormData);
-    };
-
-    const handleDeleteSelected = () => {
-        setTableData(tableData.filter((item) => !item.selected));
-    };
-
-    const handleDuplicateSelected = () => {
-        const duplicatedData = tableData
-            .filter((item) => item.selected)
-            .map((item) => ({...item, selected: false}));
-        setTableData([...tableData, ...duplicatedData]);
-    };
-    const handleGroupChange = (event: SelectChangeEvent<string>) => {
-        setFormData({
-            ...formData,
-            group: event.target.value,
-        });
+        }));
     };
 
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,39 +79,41 @@ const SignUpForm: React.FC = () => {
         const maskedValue = value.replace(/^(\d{2})(\d{3})(\d{2})(\d{2})$/, '+38 (0$1) $2-$3-$4');
         setFormData({
             ...formData,
-            phone: maskedValue,
+            phoneNumber: maskedValue,
         });
     };
 
-
-    const formatDate = (dateString: string): string => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        let month: string | number = date.getMonth() + 1;
-        let day: string | number = date.getDate();
-
-        month = month < 10 ? `0${month}` : month;
-        day = day < 10 ? `0${day}` : day;
-
-        return `${year}-${month}-${day}`;
-    };
-
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>, body: RegisterFormDto) => {
+        e.preventDefault();
+        try {
+            const { token } = await AuthApi.register(body);
+            console.log(token);
+        } catch (err) {
+        }
+    }
 
     return (
         <Container sx={styles.container}>
             <Typography sx={styles.h4} variant="h4">Реєстрація користувача</Typography>
-            <form onSubmit={handleSubmit}>
+
+            <form onSubmit={() => onSubmit}>
                 <TextField
                     sx={styles.input}
                     type={"email"}
                     label="Електронна пошта"
-                    placeholder={"google.gmail.com"}
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
                     error={!!emailError}
                     helperText={emailError}
                     required
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <EmailIcon />
+                            </InputAdornment>
+                        ),
+                    }}
                 />
                 <TextField
                     sx={styles.input}
@@ -176,6 +125,13 @@ const SignUpForm: React.FC = () => {
                     error={!!passwordError}
                     helperText={passwordError}
                     required
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <LockIcon />
+                            </InputAdornment>
+                        ),
+                    }}
                 />
                 <TextField
                     sx={styles.input}
@@ -186,8 +142,14 @@ const SignUpForm: React.FC = () => {
                     error={!!surnameError}
                     helperText={surnameError}
                     required
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <PersonIcon />
+                            </InputAdornment>
+                        ),
+                    }}
                 />
-
                 <TextField
                     sx={styles.input}
                     label="Ім'я"
@@ -197,8 +159,14 @@ const SignUpForm: React.FC = () => {
                     error={!!nameError}
                     helperText={nameError}
                     required
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <PersonIcon />
+                            </InputAdornment>
+                        ),
+                    }}
                 />
-
                 <TextField
                     sx={styles.input}
                     label="По батькові"
@@ -207,46 +175,31 @@ const SignUpForm: React.FC = () => {
                     onChange={handleInputChange}
                     error={!!patronymicError}
                     helperText={patronymicError}
-                    required
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <PersonIcon />
+                            </InputAdornment>
+                        ),
+                    }}
                 />
-
-                <TextField
-                    sx={styles.inputDate}
-                    type={"date"}
-                    label="Дата народження"
-                    name="birthdate"
-                    value={formatDate(formData.birthdate)}
-                    onChange={handleInputChange}
-                    inputProps={{max: maxDate.toISOString().split('T')[0]}}
-                    required
-                />
-
                 <TextField
                     sx={styles.input}
                     type="text"
                     label="Номер телефону"
-                    name="phone"
-                    value={formData.phone}
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
                     onChange={handlePhoneChange}
                     required
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <PhoneIcon />
+                            </InputAdornment>
+                        ),
+                    }}
                 />
-                <div>
-                    <label>Стать:</label>
-                    <Radio
-                        name="gender"
-                        value="male"
-                        checked={formData.gender === 'male'}
-                        onChange={handleGenderChange}
-                    />
-                    Чоловік
-                    <Radio
-                        name="gender"
-                        value="female"
-                        checked={formData.gender === 'female'}
-                        onChange={handleGenderChange}
-                    />
-                    Жінка
-                </div>
+
                 <Button
                     sx={styles.buttonSend}
                     type="submit"
@@ -264,7 +217,7 @@ const SignUpForm: React.FC = () => {
                 </Button>
             </form>
         </Container>
-    );
+    )
 };
 
 export default SignUpForm;

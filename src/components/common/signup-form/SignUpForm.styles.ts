@@ -22,21 +22,9 @@ export const inputDate: SxProps = {
     marginBottom: 2,
     width: "100%",
 };
-export const tableContainer: SxProps = {
-    marginTop: 4,
-    width: "80%",
-};
-
-export const table: SxProps = {
-    minWidth: 650,
-};
-
-export const button: SxProps = {
-    marginTop:2,
-    width: '20%',
-};
 export const buttonSend: SxProps = {
-    display:'flex',
-    justifyContent:'center',
-    width: '20%'
+    display: 'flex',
+    justifyContent: 'center',
+    width: '20%',
+    marginBottom: '20px'
 };
