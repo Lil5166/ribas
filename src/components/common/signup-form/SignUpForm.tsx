@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useRef, useState} from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -11,7 +11,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import * as styles from './SignUpForm.styles';
 import AuthApi from "@/lib/api/auth/AuthApi";
 import MuiAlert from '@mui/material/Alert';
-import {router} from "next/client";
+import { useRouter } from 'next/router';
 
 
 
@@ -34,6 +34,7 @@ const SignUpForm: React.FC = () => {
         phoneNumber: '',
     };
 
+    const router = useRouter();
     const [registrationStatus, setRegistrationStatus] = useState<string | null>(null);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [formData, setFormData] = useState<FormData>(initialFormData);
@@ -93,7 +94,7 @@ const SignUpForm: React.FC = () => {
             setRegistrationStatus('Реєстрація успішна!');
             setFormData(initialFormData);
             setOpenSnackbar(true);
-            await router.push('/login')
+            router.push('/login')
         } catch (err) {
             setRegistrationStatus('Помилка реєстрації. Спробуйте ще раз.');
             setOpenSnackbar(true);
