@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -11,8 +11,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import * as styles from './SignUpForm.styles';
 import AuthApi from "@/lib/api/auth/AuthApi";
 import MuiAlert from '@mui/material/Alert';
-import { useRouter } from 'next/router';
-
+import {useRouter} from 'next/router';
 
 
 interface FormData {
@@ -43,7 +42,6 @@ const SignUpForm: React.FC = () => {
     const [surnameError, setSurnameError] = useState<string | null>(null);
     const [nameError, setNameError] = useState<string | null>(null);
     const [patronymicError, setPatronymicError] = useState<string | null>(null);
-
 
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,7 +120,7 @@ const SignUpForm: React.FC = () => {
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
-                                <EmailIcon />
+                                <EmailIcon/>
                             </InputAdornment>
                         ),
                     }}
@@ -140,7 +138,7 @@ const SignUpForm: React.FC = () => {
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
-                                <LockIcon />
+                                <LockIcon/>
                             </InputAdornment>
                         ),
                     }}
@@ -157,7 +155,7 @@ const SignUpForm: React.FC = () => {
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
-                                <PersonIcon />
+                                <PersonIcon/>
                             </InputAdornment>
                         ),
                     }}
@@ -174,7 +172,7 @@ const SignUpForm: React.FC = () => {
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
-                                <PersonIcon />
+                                <PersonIcon/>
                             </InputAdornment>
                         ),
                     }}
@@ -190,7 +188,7 @@ const SignUpForm: React.FC = () => {
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
-                                <PersonIcon />
+                                <PersonIcon/>
                             </InputAdornment>
                         ),
                     }}
@@ -206,7 +204,7 @@ const SignUpForm: React.FC = () => {
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
-                                <PhoneIcon />
+                                <PhoneIcon/>
                             </InputAdornment>
                         ),
                     }}
