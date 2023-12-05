@@ -11,6 +11,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import * as styles from './SignUpForm.styles';
 import AuthApi from "@/lib/api/auth/AuthApi";
 import MuiAlert from '@mui/material/Alert';
+import {router} from "next/client";
 
 
 
@@ -92,6 +93,7 @@ const SignUpForm: React.FC = () => {
             setRegistrationStatus('Реєстрація успішна!');
             setFormData(initialFormData);
             setOpenSnackbar(true);
+            await router.push('/login')
         } catch (err) {
             setRegistrationStatus('Помилка реєстрації. Спробуйте ще раз.');
             setOpenSnackbar(true);
