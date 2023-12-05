@@ -17,11 +17,6 @@ export const input: SxProps = {
     width: "100%",
 };
 
-export const inputDate: SxProps = {
-    marginTop: 2,
-    marginBottom: 2,
-    width: "100%",
-};
 export const buttonSend: SxProps = {
     display: 'flex',
     justifyContent: 'center',
