@@ -46,10 +46,14 @@ const Header = () => {
                     </Link>
                 </IconButton>
                 {isAuthenticated && userData ? (
-                    <Box style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
+                    <Box sx={styles.boxAuth}>
                         <Avatar style={{ marginRight: '20px' }} />
                         <span style={{ color: 'white', marginRight: '16px' }}>{`${userData.name} ${userData.surname}`}</span>
-                        <Button color="inherit" onClick={handleLogout}>
+                        <Button
+                            color="inherit"
+                            onClick={handleLogout}
+                            sx={styles.buttonAuth}
+                        >
                             Вийти з акаунту
                         </Button>
                     </Box>

@@ -1,5 +1,5 @@
-import { Theme } from '@mui/material/styles';
-import { SxProps } from '@mui/system';
+import {Theme} from '@mui/material/styles';
+import {SxProps} from '@mui/system';
 
 export const appBar: SxProps<Theme> = {
     backgroundColor: 'rgb(0, 59, 149)',
@@ -34,3 +34,20 @@ export const whiteButton: SxProps<Theme> = {
         cursor: 'pointer',
     },
 };
+
+export const boxAuth: SxProps<Theme> = {
+    marginLeft: 'auto',
+    display: 'flex',
+    alignItems: 'center'
+}
+
+export const buttonAuth: SxProps<Theme> = {
+    textTransform: 'none',
+    fontSize: '15px',
+    borderRadius: '20px',
+    backgroundColor: 'white',
+    color: 'black',
+    '&:hover': {
+        backgroundColor: "white",
+    }
+}
