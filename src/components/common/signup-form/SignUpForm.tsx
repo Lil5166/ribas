@@ -3,22 +3,22 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { InputAdornment } from "@mui/material";
+import {InputAdornment, Snackbar} from "@mui/material";
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneIcon from '@mui/icons-material/Phone';
 import * as styles from './SignUpForm.styles';
 import AuthApi from "@/lib/api/auth/AuthApi";
-import {RegisterFormDto} from "@/lib/api/auth/dto/auth";
+import MuiAlert from '@mui/material/Alert';
 
 
 
 interface FormData {
     email: string;
     password: string;
-    surname: string;
     name: string;
+    surname: string;
     patronymic?: string;
     phoneNumber: string;
 }
@@ -33,6 +33,8 @@ const SignUpForm: React.FC = () => {
         phoneNumber: '',
     };
 
+    const [registrationStatus, setRegistrationStatus] = useState<string | null>(null);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
     const [formData, setFormData] = useState<FormData>(initialFormData);
     const [emailError, setEmailError] = useState<string | null>(null);
     const [passwordError, setPasswordError] = useState<string | null>(null);
@@ -83,20 +85,27 @@ const SignUpForm: React.FC = () => {
         });
     };
 
-    const onSubmit = async (e: React.FormEvent<HTMLFormElement>, body: RegisterFormDto) => {
+    const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
         try {
-            const { token } = await AuthApi.register(body);
-            console.log(token);
+            await AuthApi.register(formData);
+            setRegistrationStatus('Реєстрація успішна!');
+            setFormData(initialFormData);
+            setOpenSnackbar(true);
         } catch (err) {
+            setRegistrationStatus('Помилка реєстрації. Спробуйте ще раз.');
+            setOpenSnackbar(true);
         }
-    }
+    };
+    const handleCloseSnackbar = () => {
+        setOpenSnackbar(false);
+    };
+
 
     return (
         <Container sx={styles.container}>
             <Typography sx={styles.h4} variant="h4">Реєстрація користувача</Typography>
-
-            <form onSubmit={() => onSubmit}>
+            <form onSubmit={onSubmit}>
                 <TextField
                     sx={styles.input}
                     type={"email"}
@@ -216,6 +225,11 @@ const SignUpForm: React.FC = () => {
                     Send
                 </Button>
             </form>
+            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                <MuiAlert elevation={6} variant="filled" onClose={handleCloseSnackbar} severity="success">
+                    {registrationStatus}
+                </MuiAlert>
+            </Snackbar>
         </Container>
     )
 };
