@@ -105,13 +105,14 @@ const SignUpForm: React.FC = () => {
 
     return (
         <Container sx={styles.container}>
-            <Typography sx={styles.h4} variant="h4">Реєстрація користувача</Typography>
             <form onSubmit={onSubmit}>
                 <TextField
                     sx={styles.input}
                     type={"email"}
+                    autoComplete='off'
                     label="Електронна пошта"
                     name="email"
+                    placeholder={"Email"}
                     value={formData.email}
                     onChange={handleInputChange}
                     error={!!emailError}
@@ -127,6 +128,8 @@ const SignUpForm: React.FC = () => {
                 />
                 <TextField
                     sx={styles.input}
+                    placeholder={"Password"}
+                    autoComplete='off'
                     type={"password"}
                     label="Пароль"
                     name="password"
@@ -145,8 +148,10 @@ const SignUpForm: React.FC = () => {
                 />
                 <TextField
                     sx={styles.input}
+                    placeholder={"Surname"}
                     label="Прізвище"
                     name="surname"
+                    autoComplete='off'
                     value={formData.surname}
                     onChange={handleInputChange}
                     error={!!surnameError}
@@ -162,9 +167,11 @@ const SignUpForm: React.FC = () => {
                 />
                 <TextField
                     sx={styles.input}
+                    placeholder={"Name"}
                     label="Ім'я"
                     name="name"
                     value={formData.name}
+                    autoComplete='off'
                     onChange={handleInputChange}
                     error={!!nameError}
                     helperText={nameError}
@@ -180,7 +187,9 @@ const SignUpForm: React.FC = () => {
                 <TextField
                     sx={styles.input}
                     label="По батькові"
+                    autoComplete='off'
                     name="patronymic"
+                    placeholder={"Patronymic"}
                     value={formData.patronymic}
                     onChange={handleInputChange}
                     error={!!patronymicError}
@@ -198,9 +207,11 @@ const SignUpForm: React.FC = () => {
                     type="text"
                     label="Номер телефону"
                     name="phoneNumber"
+                    placeholder={"Phone number"}
                     value={formData.phoneNumber}
                     onChange={handlePhoneChange}
                     required
+                    autoComplete='off'
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">

@@ -3,10 +3,6 @@ export interface LoginFormDto {
     password: string;
 }
 
-export interface LoginResponseDto {
-    token: string;
-}
-
 export interface RegisterFormDto {
     email: string;
     password: string;
@@ -23,6 +19,3 @@ export interface User {
     patronymic?: string;
     phoneNumber: string;
 }
-
-
-export type RegisterResponseDto = LoginResponseDto;

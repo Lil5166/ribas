@@ -1,25 +1,23 @@
+// SignUpForm.styles.ts
 import { SxProps } from "@mui/system";
+import { Theme } from "@mui/material/styles";
 
-export const container: SxProps = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+export const container: SxProps<Theme> = {
+    borderRadius: "10px",
+    padding: "20px",
 };
 
-export const h4: SxProps = {
-    marginTop: 4,
-    marginBottom: 4,
-};
-
-export const input: SxProps = {
-    marginTop: 2,
-    marginBottom: 2,
+export const input: SxProps<Theme> = {
     width: "100%",
+    margin: "20px 0 10px 30px",
 };
 
-export const buttonSend: SxProps = {
-    display: 'flex',
-    justifyContent: 'center',
-    width: '20%',
-    marginBottom: '20px'
+export const buttonSend: SxProps<Theme> = {
+    width: "50%",
+    margin: "10px 120px",
+    borderRadius: "8px",
+};
+
+export const snackbar: SxProps<Theme> = {
+    zIndex: 9999,
 };
