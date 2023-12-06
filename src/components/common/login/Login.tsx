@@ -16,7 +16,7 @@ const Login = () => {
         try {
             await AuthApi.login(body)
             const {token} = await AuthApi.login(body);
-            Cookies.set('token', token, {expires: 7});
+            Cookies.set('token', token, {expires: 1});
             router.push('/');
         } catch (error) {
             setError('Помилка входу. Будь ласка, спробуйте знову.');

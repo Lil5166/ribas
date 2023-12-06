@@ -6,17 +6,16 @@ import GlobalStyle from "@/styles/GlobalStyle";
 interface LayoutProps {
     title: string;
     children?: ReactNode;
-    hasHeader?: boolean;
 }
 
-const Layout: React.FC<LayoutProps> = ({title, children, hasHeader = true}) => {
+const Layout: React.FC<LayoutProps> = ({title, children}) => {
     return (
         <>
             <Head>
                 <title>{title}</title>
                 <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
             </Head>
-            {hasHeader && (<Header />)}
+            <Header />
             <GlobalStyle/>
             {children}
         </>

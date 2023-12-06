@@ -5,7 +5,7 @@ import Login from "@/components/common/login";
 const SignUp = () => {
     return (
         <div>
-            <Layout title={"Сторінка входу в обліковий запис"} hasHeader={false}/>
+            <Layout title={"Сторінка входу в обліковий запис"}/>
             <Login />
         </div>
     );
