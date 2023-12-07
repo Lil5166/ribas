@@ -240,6 +240,10 @@ const SignUpForm: React.FC = () => {
                 <MuiAlert elevation={6} variant="filled" onClose={handleCloseSnackbar} severity="success">
                     {registrationStatus}
                 </MuiAlert>
+            </Snackbar><Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                <MuiAlert elevation={6} variant="filled" onClose={handleCloseSnackbar} severity="error">
+                    {registrationStatus}
+                </MuiAlert>
             </Snackbar>
         </Container>
     )
