@@ -25,6 +25,13 @@ const HotelPage: NextPage<HotelPageProps> = ({ hotel, rooms }) => {
             setShowAlert(true);
             return;
         }
+        if (roomId) {
+            // Perform room reservation logic
+            console.log('Room reservation for room ID:', roomId);
+        } else {
+            console.error('Invalid room ID:', roomId);
+            // Handle the case where room ID is undefined
+        }
         console.log(`Room ${roomId} reserved by ${session.user.name}`);
     };
     const handleCloseAlert = () => {
@@ -130,7 +137,12 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, onReserve }) => (
             <Typography variant="body2" color="text.secondary">
                 Beds: {room.beds}
             </Typography>
-            <Button onClick={onReserve} variant="contained" color="primary" href={'/booking'}>
+            <Button
+                onClick={() => room.id && onReserve()}
+                variant="contained"
+                color="primary"
+                href={'/booking'}
+            >
                 Забронювати
             </Button>
         </CardContent>

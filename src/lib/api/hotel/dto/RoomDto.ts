@@ -1,7 +1,7 @@
 export interface RoomDto {
     id: string,
-    price: Number,
+    price: number,
     description?: string,
-    rooms: string,
-    beds: string,
+    rooms: number,
+    beds: number,
 }

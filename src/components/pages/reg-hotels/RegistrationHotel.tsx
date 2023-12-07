@@ -7,7 +7,6 @@ import {
     Grid,
 } from '@mui/material';
 import * as styles from './RegistrationHotel.styles';
-import Cookies from "js-cookie";
 import {HotelDto} from "@/lib/api/hotel/dto/HotelDto";
 import {useRouter} from "next/router";
 import HotelApi from "@/lib/api/hotel/HotelApi";
@@ -34,7 +33,7 @@ const HotelRegistration = () => {
     const handleSubmit = async (body: HotelDto) => {
         try {
             await HotelApi.createHotel(body);
-            router.push('/hotel');
+            router.push('/');
         } catch (error) {
             setError('Помилка створення готелю. Будь ласка, спробуйте знову.');
         }

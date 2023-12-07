@@ -1,102 +1,95 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import {
-    TextField,
-    Button,
-    Typography,
-    Container,
-    Grid,
-} from '@mui/material';
-import * as styles from './RegistrationRooms.styles';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { Button, TextField, Typography, Container } from '@mui/material';
+import {RoomDto} from "@/lib/api/hotel/dto/RoomDto";
+import HotelApi from "@/lib/api/hotel/HotelApi";
 
+export default function CreateRoom() {
+    const router = useRouter();
+    const { hotelId } = router.query;
+    const [roomData, setRoomData] = useState<RoomDto>({
+        price: 0,
+        id: "",
+        rooms: 0,
+        beds: 0,
+    });
 
-const RoomRegistration = () => {
-    const [roomName, setRoomName] = useState('');
-    const [description, setDescription] = useState('');
-    const [pricePerNight, setPricePerNight] = useState('');
+    const handleCreateRoom = async () => {
+        try {
+            const currentHotelId = typeof hotelId === 'string' ? hotelId : '';
 
-    const handleRoomNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setRoomName(event.target.value);
+            const createdRoom = await HotelApi.createRoom(currentHotelId, roomData);
+
+            console.log('Room created:', createdRoom);
+            router.push(`/hotel/${currentHotelId}`);
+        } catch (error) {
+            console.error('Error creating room:', error);
+        }
     };
 
-    const handleDescriptionChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setDescription(event.target.value);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+
+        const numericValue = name === 'price' ? parseFloat(value) : parseInt(value, 10);
+
+        setRoomData((prevData) => ({
+            ...prevData,
+            [name]: name === 'description' ? String(value) : isNaN(numericValue) ? 0 : numericValue,
+        }));
     };
 
-    const handlePricePerNightChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setPricePerNight(event.target.value);
-    };
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        console.log('Дані про номер:', {
-            roomName,
-            description,
-            pricePerNight,
-        });
-        setRoomName('');
-        setDescription('');
-        setPricePerNight('');
-    };
 
     return (
-        <Container sx={styles.container} maxWidth="sm">
-            <Typography sx={styles.h4} variant="h4" align="center" gutterBottom>
-                Реєстрація номера
+        <Container maxWidth="sm">
+            <Typography variant="h4" gutterBottom>
+                Create a Room
             </Typography>
-            <form onSubmit={handleSubmit}>
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <TextField
-                            sx={styles.input}
-                            fullWidth
-                            label="Назва номеру"
-                            value={roomName}
-                            onChange={handleRoomNameChange}
-                            variant="outlined"
-                            required
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            sx={styles.input}
-                            fullWidth
-                            label="Опис"
-                            value={description}
-                            onChange={handleDescriptionChange}
-                            variant="outlined"
-                            multiline
-                            rows={4}
-                            required
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            sx={styles.input}
-                            fullWidth
-                            label="Вартість за ніч"
-                            value={pricePerNight}
-                            onChange={handlePricePerNightChange}
-                            variant="outlined"
-                            required
-                            type="number"
-                            inputProps={{ min: '0', step: '0.01' }}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button
-                            sx={styles.buttonSend}
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                        >
-                            Зареєструвати номер
-                        </Button>
-                    </Grid>
-                </Grid>
+            <form>
+                <TextField
+                    label="Price"
+                    type="number"
+                    name="price"
+                    value={roomData.price}
+                    onChange={handleInputChange}
+                    fullWidth
+                    margin="normal"
+                />
+                <TextField
+                    label="Description"
+                    name="description"
+                    value={roomData.description || ''}
+                    onChange={handleInputChange}
+                    fullWidth
+                    margin="normal"
+                />
+                <TextField
+                    label="Number of Rooms"
+                    name="rooms"
+                    value={roomData.rooms}
+                    onChange={handleInputChange}
+                    fullWidth
+                    margin="normal"
+                />
+                <TextField
+                    label="Number of Beds"
+                    name="beds"
+                    value={roomData.beds}
+                    onChange={handleInputChange}
+                    fullWidth
+                    margin="normal"
+                />
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleCreateRoom}
+                    fullWidth
+                    style={{ marginTop: '1rem' }}
+                >
+                    Create Room
+                </Button>
             </form>
         </Container>
     );
-};
-
-export default RoomRegistration;
+}
