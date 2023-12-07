@@ -13,7 +13,7 @@ export interface RegisterFormDto {
 }
 
 export interface UserDto {
-    email: string;
+    email?: string;
     name: string;
     surname: string;
     patronymic?: string;

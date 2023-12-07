@@ -24,6 +24,10 @@ class AuthApi {
         const { data }  = await client.post('/auth/reg-admin', body)
         return data;
     }
+    async updateUserProfile(body: UserDto) {
+        const { data } = await client.patch('/users', body, getAuthorizationHeader())
+        return data;
+    }
 }
 
 export default new AuthApi();

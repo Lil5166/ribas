@@ -47,7 +47,9 @@ const Header = () => {
                 </IconButton>
                 {isAuthenticated && userData ? (
                     <Box sx={styles.boxAuth}>
+                        <Link href={"/user"}>
                         <Avatar style={{ marginRight: '20px' }} />
+                        </Link>
                         <span style={{ color: 'white', marginRight: '16px' }}>{`${userData.name} ${userData.surname}`}</span>
                         <Button
                             color="inherit"
@@ -56,6 +58,11 @@ const Header = () => {
                         >
                             Вийти з акаунту
                         </Button>
+                        <Link href={"user/bookings"} passHref>
+                            <Button color="inherit" sx={styles.buttonAuth}>
+                                Переглянути бронювання
+                            </Button>
+                        </Link>
                     </Box>
                 ) : (
                     <Box style={{ marginLeft: 'auto' }}>

@@ -43,6 +43,7 @@ export const boxAuth: SxProps<Theme> = {
 
 export const buttonAuth: SxProps<Theme> = {
     textTransform: 'none',
+    margin: "5px",
     fontSize: '15px',
     borderRadius: '20px',
     backgroundColor: 'white',
