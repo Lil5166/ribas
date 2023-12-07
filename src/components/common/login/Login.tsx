@@ -14,7 +14,6 @@ const Login = () => {
 
     const handleSubmit = async (body: LoginFormDto) => {
         try {
-            await AuthApi.login(body)
             const {token} = await AuthApi.login(body);
             Cookies.set('token', token, {expires: 1});
             router.push('/');

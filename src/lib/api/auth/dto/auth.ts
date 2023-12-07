@@ -12,10 +12,12 @@ export interface RegisterFormDto {
     phoneNumber: string;
 }
 
-export interface User {
+export interface UserDto {
     email: string;
     name: string;
     surname: string;
     patronymic?: string;
     phoneNumber: string;
 }
+
+export type Admin = LoginFormDto;

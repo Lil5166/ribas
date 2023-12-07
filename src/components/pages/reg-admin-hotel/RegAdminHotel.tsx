@@ -1,23 +1,41 @@
-import React, {useState} from 'react';
+import React, {FormEvent, useState} from 'react';
 import {Button, Container, InputAdornment, TextField, Typography} from '@mui/material';
 import * as styles from './RegHotel.styles'
 import IconButton from "@mui/material/IconButton";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import {Admin, LoginFormDto} from "@/lib/api/auth/dto/auth";
+import AuthApi from "@/lib/api/auth/AuthApi";
+import Cookies from "js-cookie";
+import {useRouter} from "next/router";
 
 const RegAdminHotel: React.FC = () => {
+    const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const [error, setError] = useState('');
+
+    const handleSubmit = async (body: Admin) => {
+        try {
+            const {token} = await AuthApi.createAdmin(body);
+            Cookies.set('token', token, {expires: 1});
+            router.push('/reg-hotel');
+        } catch (error) {
+            setError('Помилка входу. Будь ласка, спробуйте знову.');
+        }
+    };
+
+    const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        await handleSubmit({email, password});
     };
 
     return (
         <Container component="main" maxWidth="xs" sx={styles.container}>
             <div>
                 <Typography component="h1" variant="h5">
-                    Реєстрація готеля
+                    Реєстрація адміністратора готелю
                 </Typography>
                 <form onSubmit={handleFormSubmit}>
                     <TextField

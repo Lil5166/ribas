@@ -1,6 +1,7 @@
 import { client } from '../instance';
-import {LoginFormDto, RegisterFormDto, User} from "@/lib/api/auth/dto/auth";
+import {Admin, LoginFormDto, RegisterFormDto, UserDto} from "@/lib/api/auth/dto/auth";
 import Cookies from "js-cookie";
+import {getAuthorizationHeader} from "@/lib/utils/getAuthorizationHeader";
 
 const token = Cookies.get('token')
 class AuthApi {
@@ -15,12 +16,14 @@ class AuthApi {
     }
 
     async getMe() {
-        const {data} = await client.get<User>('/auth/user', {
-            headers: {Authorization: `Bearer ${token}`}
-        })
+        const {data} = await client.get<UserDto>('/auth/user', getAuthorizationHeader())
+        return data;
+    }
+
+    async createAdmin(body: Admin) {
+        const { data }  = await client.post('/auth/reg-admin', body)
         return data;
     }
 }
-
 
 export default new AuthApi();

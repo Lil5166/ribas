@@ -7,34 +7,42 @@ import {
     Grid,
 } from '@mui/material';
 import * as styles from './RegistrationHotel.styles';
+import Cookies from "js-cookie";
+import {HotelDto} from "@/lib/api/hotel/dto/HotelDto";
+import {useRouter} from "next/router";
+import HotelApi from "@/lib/api/hotel/HotelApi";
 
 const HotelRegistration = () => {
-    const [hotelName, setHotelName] = useState('');
-    const [city, setCity] = useState('');
+    const router = useRouter();
+    const [title, setTitle] = useState('');
+    const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
+    const [error, setError] = useState('');
 
     const handleHotelNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setHotelName(event.target.value);
+        setTitle(event.target.value);
     };
 
     const handleCityChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setCity(event.target.value);
+        setLocation(event.target.value);
     };
 
     const handleDescriptionChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(event.target.value);
     };
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        console.log('Дані про готель:', {
-            hotelName,
-            city,
-            description,
-        });
-        setHotelName('');
-        setCity('');
-        setDescription('');
+    const handleSubmit = async (body: HotelDto) => {
+        try {
+            await HotelApi.createHotel(body);
+            router.push('/hotel');
+        } catch (error) {
+            setError('Помилка створення готелю. Будь ласка, спробуйте знову.');
+        }
+    };
+
+    const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        await handleSubmit({title, location, description});
     };
 
     return (
@@ -42,14 +50,14 @@ const HotelRegistration = () => {
             <Typography sx={styles.h4} variant="h4" align="center" gutterBottom>
                 Реєстрація готелю
             </Typography>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleFormSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <TextField
                             sx={styles.input}
                             fullWidth
                             label="Назва готелю"
-                            value={hotelName}
+                            value={title}
                             onChange={handleHotelNameChange}
                             variant="outlined"
                             required
@@ -60,7 +68,7 @@ const HotelRegistration = () => {
                             sx={styles.input}
                             fullWidth
                             label="Місто розташування"
-                            value={city}
+                            value={location}
                             onChange={handleCityChange}
                             variant="outlined"
                             required

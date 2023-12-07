@@ -10,12 +10,12 @@ import Box from '@mui/material/Box';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import AuthApi from '@/lib/api/auth/AuthApi';
-import {User} from "@/lib/api/auth/dto/auth";
+import {UserDto} from "@/lib/api/auth/dto/auth";
 
 const Header = () => {
     const isAuthenticated = !!Cookies.get('token');
     const router = useRouter();
-    const [userData, setUserData] = useState<User | null>(null);
+    const [userData, setUserData] = useState<UserDto | null>(null);
 
     useEffect(() => {
         const fetchUserData = async () => {

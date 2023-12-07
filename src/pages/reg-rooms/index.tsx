@@ -1,14 +1,14 @@
 import React from 'react';
-import RegAdminHotel from "@/components/pages/reg-admin-hotel/RegAdminHotel";
 import Layout from "@/components/common/layout/Layout";
+import RoomRegistration from "@/components/pages/reg-rooms/RegistrationRooms";
 
-const RegAdmin = () => {
+const RegRooms = () => {
     return (
         <div>
             <Layout title={"Сторінка реєстрації адміністратора готелю"}/>
-            <RegAdminHotel />
+            <RoomRegistration />
         </div>
     );
 };
 
-export default RegAdmin;
+export default RegRooms;
